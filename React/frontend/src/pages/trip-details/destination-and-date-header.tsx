@@ -13,7 +13,11 @@ interface Trip {
   is_confirmed: boolean
 }
 
-export function DestinationAndDateHeader() {
+interface DestinationAndDateHeaderProps {
+  openAlterTripDetailsModal: () => void
+}
+
+export function DestinationAndDateHeader({ openAlterTripDetailsModal }: DestinationAndDateHeaderProps) {
   const { tripId } = useParams()
   const [ trip, setTrip ] = useState<Trip | undefined>()
 
@@ -41,7 +45,7 @@ export function DestinationAndDateHeader() {
           <div className="w-px h-6 bg-zinc-800" />
           
           <div>
-            <Button variant="secondary">
+            <Button onClick={openAlterTripDetailsModal} variant="secondary">
               Alterar local/data
               <Settings2 className="size-5" />
             </Button>
