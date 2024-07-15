@@ -3,6 +3,7 @@ import { Button } from "../../components/button";
 import { FormEvent } from "react";
 import { api } from "../../lib/axios";
 import { useParams } from "react-router-dom";
+import { TextInput } from "../../components/text-input";
 
 interface CreateLinkModalProps {
   closeCreateLinkModal: () => void
@@ -45,10 +46,12 @@ export function CreateLinkModal({
         </div>
 
         <form onSubmit={(event) => createLink(event)} className="space-y-3">
-          <div className="flex items-center flex-1 gap-2 h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg">
+          <TextInput placeholder="Título do link" icon={<Tag className="text-zinc-400 size-5" />}>
+          </TextInput>
+          {/* <div className="flex items-center flex-1 gap-2 h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg">
             <Tag className="text-zinc-400 size-5" />
             <input name="title" placeholder="Título do link" className="bg-transparent text-lg text-zinc-400 outline-none flex-1" />
-          </div>
+          </div> */}
            
           <div className="flex items-center gap-2">
             <div className="flex items-center flex-1 gap-2 h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg">
