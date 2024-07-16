@@ -1,5 +1,8 @@
 import { Calendar, Tag, X } from "lucide-react";
 import { Button } from "../../components/button";
+import { FormEvent } from "react";
+import { api } from "../../lib/axios";
+import { useParams } from "react-router-dom";
 
 interface CreateActivityModalProps {
   closeCreateActivityModal: () => void
@@ -8,6 +11,23 @@ interface CreateActivityModalProps {
 export function CreateActivityModal({
   closeCreateActivityModal
 }: CreateActivityModalProps) {
+  const { tripId } = useParams()
+
+  async function createActivity(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const data = new FormData(event.currentTarget)
+    const title = data.get('title')?.toString()
+    const occurs_at = data.get('occurs_at')?.toString()
+
+    await api.post(`/trips/${tripId}/activities`, {
+      title,
+      occurs_at
+    })
+
+    window.document.location.reload()
+  }
+
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
           <div className="w-[640px] bg-zinc-900 rounded-xl py-5 px-6 shadow-shape space-y-5">
@@ -24,7 +44,7 @@ export function CreateActivityModal({
               </p>
             </div>
 
-            <form className="space-y-3">
+            <form onSubmit={(event) => createActivity(event)} className="space-y-3">
               <div className="flex items-center flex-1 gap-2 h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg">
                 <Tag className="text-zinc-400 size-5"/>
                 <input name="title" placeholder="Qual a atividade?" className="bg-transparent text-lg text-zinc-400 outline-none flex-1" />
